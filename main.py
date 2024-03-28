@@ -1,42 +1,45 @@
+import logging
 import os
 
+from telegram import Update
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
 from dotenv import load_dotenv
+load_dotenv()
 
-load_dotenv()  # take environment variables from .env.
+logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
 
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 
-import logging
-from telegram import Update
-from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler
 
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    level=logging.INFO
-)
+async def hello(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    await update.message.reply_text(f'Hello {update.effective_user.first_name}')
 
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot, please talk to me!")
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    await update.message.reply_text(f'Hello, I am Guts_bot! How can I help you?')
 
 
-async def hello(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(chat_id=update.effective_chat.id, text="Hello!")
+async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    message = update.message.text.lower()
 
-async def yourname(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(chat_id=update.effective_chat.id, text="Volodymyr")
+    if 'привіт' in message or 'hello' in message or 'hi' in message:
+        reply_text = f'Привіт, {update.effective_user.first_name}!'
+    else:
+        reply_text = 'Я тебе не розумію.'
 
-async def howoldareyou(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(chat_id=update.effective_chat.id, text="I am 24 years old")
+    await update.message.reply_text(reply_text)
 
 
-if __name__ == '__main__':
-    application = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
+async def goodbye(context: ContextTypes.DEFAULT_TYPE) -> None:
+    await context.bot.send_message(context.job.context, text="До побачення!")
 
-    start_handler = CommandHandler('start', start)
-    start_handler = CommandHandler('hello', hello)
-    start_handler = CommandHandler('yourname', yourname)
-    start_handler = CommandHandler('howoldareyou', howoldareyou)
-    application.add_handler(start_handler)
 
-    application.run_polling()
+app = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
+
+app.add_handler(CommandHandler("hello", hello))
+app.add_handler(CommandHandler("start", start))
+app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, echo))
+
+
+
+app.run_polling()
