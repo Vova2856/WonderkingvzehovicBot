@@ -23,7 +23,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def hello(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id, text="Hello!")
 
-async def name(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def yourname(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id, text="Vova")
 
 
@@ -32,6 +32,7 @@ if __name__ == '__main__':
 
     start_handler = CommandHandler('start', start)
     start_handler = CommandHandler('hello', hello)
+    start_handler = CommandHandler('yourname', yourname)
     application.add_handler(start_handler)
 
     application.run_polling()
