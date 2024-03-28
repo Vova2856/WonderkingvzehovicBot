@@ -4,12 +4,11 @@ from dotenv import load_dotenv
 
 load_dotenv()  # take environment variables from .env.
 
-print(os.getenv('TELEGRAM_TOKEN'))
+TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 
 import logging
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler
-from config import TELEGRAM_TOKEN
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
