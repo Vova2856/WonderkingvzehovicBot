@@ -29,6 +29,7 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     else:
         reply_text = 'Я тебе не розумію.'
 
+
     await update.message.reply_text(reply_text)
 
 
