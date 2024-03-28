@@ -24,11 +24,10 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
     if 'привіт' in message or 'hello' in message or 'hi' in message:
         reply_text = f'Привіт, {update.effective_user.first_name}!'
+    elif 'допобачення' in message or 'бувай' in message or 'hi' in message:
+        reply_text = f'допобачення, {update.effective_user.first_name}!'
     else:
         reply_text = 'Я тебе не розумію.'
-
-    if 'допобачення' in message or 'бувай' in message or 'hi' in message:
-        reply_text = f'допобачення, {update.effective_user.first_name}!'
 
     await update.message.reply_text(reply_text)
 
