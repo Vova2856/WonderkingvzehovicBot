@@ -27,11 +27,10 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     else:
         reply_text = 'Я тебе не розумію.'
 
+    if 'допобачення' in message or 'бувай' in message or 'hi' in message:
+        reply_text = f'допобачення, {update.effective_user.first_name}!'
+
     await update.message.reply_text(reply_text)
-
-
-async def goodbye(context: ContextTypes.DEFAULT_TYPE) -> None:
-    await context.bot.send_message(context.job.context, text="До побачення!")
 
 
 app = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
