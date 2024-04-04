@@ -1,7 +1,7 @@
 import logging
 import os
 
-from telegram import Update
+from telegram import Update, KeyboardButton, ReplyKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
 from dotenv import load_dotenv
 load_dotenv()
@@ -12,7 +12,14 @@ TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 
 
 async def hello(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    await update.message.reply_text(f'Hello {update.effective_user.first_name}')
+    keyboard = [
+        [keyboardButton('Hello'),keyboardButton('World')],
+        [keyboardButton('Good buy')]
+    ]
+    reply_markup = ReplyKeyboardMarkup(keyboard)
+
+    await update.message.reply_text(f'Hello {update.effective_user.first_name}'),
+    reply_markup=reply_markup
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
