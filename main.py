@@ -13,8 +13,8 @@ TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 
 async def hello(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     keyboard = [
-        [keyboardButton('Hello'),keyboardButton('World')],
-        [keyboardButton('Good buy')]
+        [KeyboardButton('Hello'),KeyboardButton('World')],
+        [KeyboardButton('Good buy')]
     ]
     reply_markup = ReplyKeyboardMarkup(keyboard)
 
